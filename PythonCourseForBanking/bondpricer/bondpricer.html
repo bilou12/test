@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bondpricer.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Bond Pricer </h1>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Parameters</h2>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-3">Par Value</label>
+            <div class="col-sm-9">
+                <input type="number" step="any" class="form-control" id="parValue" placeholder="1000">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">Annual Discount Rate (%)</label>
+            <div class="col-sm-9">
+                <input type="number" step="any" class="form-control" id="annualDiscountRate" placeholder="5">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">Annual Coupon Rate (%)</label>
+            <div class="col-sm-9">
+                <input type="number" step="any" class="form-control" id="annualCouponRate" placeholder="3">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">Maturity (years)</label>
+            <div class="col-sm-9">
+                <input type="number" step="any" class="form-control" id="maturity" placeholder="1000">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">Coupon Periodicity</label>
+            <div class="col-sm-9">
+                <label class="radio-inline">
+                    <input type="radio" id="noCoupon" name="optradio">No Coupon
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" id="monthly" name="optradio">Monthly
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" id="quarterly" name="optradio">Quarterly
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" id="semiAnnual" name="optradio">Semi-Annual
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" id="annual" name="optradio">Annual
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-9">
+                <button type="submit" class="btn bnt-primary" onclick="calculate2()">Price</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container">
+    <h2>Results</h2>
+
+    <table class="table table-bordered" id="tableResults">
+        <thead>
+        <tr>
+            <th>Period</th>
+            <th>Value</th>
+            <th>Present Value</th>
+        </tr>
+        <tr>
+            <td>Row3 cell1</td>
+            <td>Row3 cell2</td>
+            <td>Row3 cell3</td>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+</body>
+</html>
