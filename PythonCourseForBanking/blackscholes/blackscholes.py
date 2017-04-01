@@ -1,10 +1,10 @@
 import math
 
-from scipy.stats import norm  # scipy is one of the tool every python developer needs to know
+from flask import Flask, request, jsonify, render_template
+from scipy.stats import norm
 
+app = Flask(__name__)
 
-# this code is following the pep8 norm, and should be compatible Python 2.x and 3.x, I have only tested on Python3.x
-# pep8 describes a set of rules to follow given that Python is a permissive language
 
 class BlackScholesPricer:
     def __init__(self, underlying_price, strike_price, rate, time_to_maturity, volatility, call_put='call'):
@@ -14,16 +14,13 @@ class BlackScholesPricer:
         self.time_to_maturity = time_to_maturity
         self.volatility = volatility
         self.call_put = call_put
-        self.d1, self.d2 = self._calculate_d1_d2()  # Python functions can return multiple outputs
-        self.result_price, self.delta, self.gamma, self.theta, self.rho, self.vega = self.get_price_and_greeks()
+        self.d1, self.d2 = self._calculate_d1_d2()
+        self.option_price, self.delta, self.gamma, self.theta, self.rho, self.vega = self.get_price_and_greeks()
 
-    # surcharge native method to make it custom
     def __str__(self):
-        return ('result_price = ' + str(self.result_price) + ', delta = ' + str(self.delta) + ', gamma = ' + str(
+        return ('result_price = ' + str(self.option_price) + ', delta = ' + str(self.delta) + ', gamma = ' + str(
             self.gamma) + ', theta = ' + str(self.theta) + ', rho = ' + str(self.rho) + ', vega = ' + str(self.vega))
 
-    # this function starts by _ because even though it will accessible from everywhere,
-    # it should be used inside the class (pep)
     def _calculate_d1_d2(self):
         d1 = (math.log(self.underlying_price / self.strike_price) + (
             self.rate + self.volatility * self.volatility / 2) * self.time_to_maturity) / (
@@ -79,16 +76,41 @@ class BlackScholesPricer:
         return 0.01 * self.underlying_price * math.sqrt(self.time_to_maturity) * norm.pdf(self.d1)
 
 
-# Python can be launched 1) within pyCharm 2) with the Python console 3) with the windows command line
-# tips: you can also select the lines you want to play and click on alt + shift + E
-# we are going to use 1) within pyCharm
-# just write 'main' then enter at the bottom of your page and it will create the line
-# this is a part of the code where you can put some tests because it will be used only if you play the module
-# not if you import it somewhere else for example
+@app.route('/')
+def index():
+    return render_template('blackscholes.html')
+
+
+@app.route('/price_with_blackscholes')
+def price_with_blackscholes():
+    underlying_price = request.args.get('underlying_price', 0, type=float)
+    strike_price = request.args.get('strike_price', 0, type=float)
+    rate = request.args.get('rate', 0, type=float)
+    time_to_maturity = request.args.get('time_to_maturity', 0, type=float)
+    volatility = request.args.get('volatility', 0, type=float)
+    call_put = request.args.get('call_put', 0, type=str)
+    bsp = BlackScholesPricer(underlying_price=underlying_price,
+                             strike_price=strike_price,
+                             rate=rate,
+                             time_to_maturity=time_to_maturity,
+                             volatility=volatility,
+                             call_put=call_put)
+    return jsonify(option_price=round(bsp.option_price, 5),
+                   delta=round(bsp.delta, 5),
+                   gamma=round(bsp.gamma, 5),
+                   theta=round(bsp.theta, 5),
+                   rho=round(bsp.rho, 5),
+                   vega=round(bsp.vega, 5))
+
+
 if __name__ == '__main__':
-    bsp_call = BlackScholesPricer(underlying_price=60, strike_price=62, rate=0.04, time_to_maturity=0.2,
-                                  volatility=0.32, call_put='call')
-    print(str(bsp_call))
-    bsp_put = BlackScholesPricer(underlying_price=60, strike_price=62, rate=0.04, time_to_maturity=0.2,
-                                 volatility=0.32, call_put='call')
-    print(str(bsp_put))
+    # app.run()
+    underlying_price = 52
+    strike_price = 50
+    rate = 0.02
+    time_to_maturity = 0.3
+    volatility = 0.32
+    call_put = 'call'
+    bsp = BlackScholesPricer(underlying_price=underlying_price, strike_price=strike_price, rate=rate,
+                             time_to_maturity=time_to_maturity, volatility=volatility, call_put=call_put)
+    print(str(bsp))

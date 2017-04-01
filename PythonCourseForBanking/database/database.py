@@ -5,7 +5,7 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-Base = declarative_base()  # http://docs.sqlalchemy.org/en/latest/orm/mapping_styles.html#declarative-mapping
+Base = declarative_base()
 
 
 class DatabaseManagement:
@@ -16,15 +16,9 @@ class DatabaseManagement:
         self.connection_string = 'mssql+pyodbc://' + server + '/' + database + '?driver=SQL+Server+Native+Client+11.0'
         self.engine = create_engine(self.connection_string, echo=True)
 
-        # for the definition of a session,
-        # see http://docs.sqlalchemy.org/en/latest/orm/session_basics.html#what-does-the-session-do
-        # we will use it insert, delete, update
         self.Session = sessionmaker(bind=self.engine)
         self.session = self.Session()
 
-        # for the definition of a metadata,
-        # see http://docs.sqlalchemy.org/en/latest/core/metadata.html
-        # we will use it to create the table if it does not exist yet
         self.metadata = MetaData()
         self.metadata.reflect(bind=self.engine)
 
@@ -32,7 +26,6 @@ class DatabaseManagement:
 
     def create_table_deals(self):
         if 'Deals' not in self.metadata.tables:
-            # concretely, this is with this line that the table is created according to the class definition
             Base.metadata.create_all(self.engine)
 
         deals_table = self.metadata.tables['Deals']
@@ -57,7 +50,7 @@ class Deal(Base):
 
 if __name__ == '__main__':
     server = 'LAPTOP-JM6KCP86\SQLEXPRESS2'
-    database = 'VbaFinanceDb'
+    database = 'VbaFinanceDb'  # Nifigo
     db_mgmt = DatabaseManagement(server=server, database=database)
 
     # DELETE
@@ -80,6 +73,10 @@ if __name__ == '__main__':
 
     # GET
     all_deals = db_mgmt.session.query(Deal).all()
+
+    for deal in all_deals:
+        print(deal)
+
     all_bonds = db_mgmt.session.query(Deal).filter_by(type='Bond').all()
     first_action = db_mgmt.session.query(Deal).filter_by(type='Action').first()
 

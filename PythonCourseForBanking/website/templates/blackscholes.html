@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10">
+        <h3 class="text-center">Black&Scholes Pricer</h3>
+    </div>
+    <div class="col-xs-1"></div>
+</div>
+
+<br>
+
+<div class="row">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-sm-3">Underlying Price</label>
+            <div class="col-sm-6">
+                <input type="number" step="any" class="form-control" id="underlyingPrice" placeholder="50">
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">Strike Price</label>
+            <div class="col-sm-6">
+                <input type="number" step="any" class="form-control" id="strikePrice" placeholder="52">
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">Rate (%)</label>
+            <div class="col-sm-6">
+                <input type="number" step="any" class="form-control" id="rate" placeholder="0.04">
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">Time to Maturity (fraction of years)</label>
+            <div class="col-sm-6">
+                <input type="number" step="any" class="form-control" id="timeToMaturity" placeholder="0.2">
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3">Volatility (%)</label>
+            <div class="col-sm-6">
+                <input type="number" step="any" class="form-control" id="volatility" placeholder="0.32">
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-sm-3">Option Type</label>
+            <div class="col-sm-6">
+                <label class="radio-inline">
+                    <input type="radio" id="call" name="optradio">Call
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" id="put" name="optradio">Put
+                </label>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </form>
+</div>
+
+<br>
+<br>
+
+<div class="row">
+    <div class="col-xs-5"></div>
+    <div class="col-xs-2">
+        <button class="btn btn-success" href=# id="calculate">Price</button>
+    </div>
+    <div class="col-xs-5"></div>
+</div>
+
+<br>
+<br>
+
+<div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-10">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Option Price</th>
+                <th>Delta</th>
+                <th>Gamma</th>
+                <th>Theta</th>
+                <th>Vega</th>
+                <th>Rhô</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td id="optionPrice">?</td>
+                <td id="delta">?</td>
+                <td id="gamma">?</td>
+                <td id="vega">?</td>
+                <td id="theta">?</td>
+                <td id="rho">?</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xs-1"></div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<!--<div class="row">-->
+    <!--<div class="col-xs-1"></div>-->
+    <!--<div class="col-xs-10">-->
+        <!--<h3 class="text-center">Asset Price Chart</h3>-->
+    <!--</div>-->
+    <!--<div class="col-xs-1"></div>-->
+<!--</div>-->
+
+<!--<br>-->
+
+<!--<div class="row">-->
+    <!--<form class="form-horizontal">-->
+        <!--<div class="form-group">-->
+            <!--<label class="control-label col-sm-4">Underlying Asset (YahooFinance code)</label>-->
+            <!--<div class="col-sm-6">-->
+                <!--<input type="text" step="any" class="form-control" id="underlyingPrice" placeholder="YHOO">-->
+            <!--</div>-->
+            <!--<div class="col-sm-2"></div>-->
+        <!--</div>-->
+    <!--</form>-->
+<!--</div>-->
+
+<!--<br>-->
+<!--<br>-->
+
+<!--<div class="row">-->
+    <!--<div class="col-xs-5"></div>-->
+    <!--<div class="col-xs-2">-->
+        <!--<button class="btn btn-success" href=# id="get">Get</button>-->
+    <!--</div>-->
+    <!--<div class="col-xs-5"></div>-->
+<!--</div>-->
+
+<!--<br>-->
+<!--<br>-->
+
+<div id={{ chartID|safe }} class="chart" style="height: 100px; width: 500px"></div>
+<script>
+			var chart_id = {{ chartID|safe }}
+			var series = {{ series|safe }}
+			var title = {{ title|safe }}
+			var xAxis = {{ xAxis|safe }}
+			var yAxis = {{ yAxis|safe }}
+			var chart = {{ chart|safe }}
+</script>
+
+
+{% endblock %}
